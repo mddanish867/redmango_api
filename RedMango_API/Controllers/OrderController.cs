@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RedMango_API.Data;
@@ -23,8 +24,9 @@ namespace RedMango_API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<ApiResponse>> GetOrders(string? userId,
-            string searchString, string status, int pageNumber = 1, int pageSize = 5)
+            string searchString, string status, int pageNumber = 1, int pageSize = 3)
         {
             try
             {
@@ -40,6 +42,7 @@ namespace RedMango_API.Controllers
                     orderHeaders = orderHeaders.Where(u => u.ApplicationUserId == userId);
                 }
 
+                //filter
                 if (!string.IsNullOrEmpty(searchString))
                 {
                     orderHeaders = orderHeaders
@@ -51,7 +54,7 @@ namespace RedMango_API.Controllers
                 {
                     orderHeaders = orderHeaders.Where(u => u.Status.ToLower() == status.ToLower());
                 }
-
+                //pagination
                 Pagination pagination = new()
                 {
                     CurrentPage = pageNumber,

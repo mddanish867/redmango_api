@@ -130,7 +130,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// Start Enabled Cors to acees any endpoint
+// Start Enabled Cors to acees any endpoint 
+// WithExposedHeaders("*") to all headers
 app.UseCors(o => o.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().WithExposedHeaders("*"));
 // Start Enabled Cors to acees any endpoint
 

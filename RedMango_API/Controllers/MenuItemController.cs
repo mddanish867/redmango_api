@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RedMango_API.Data;
@@ -56,6 +57,7 @@ namespace RedMango_API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = SD.Role_Admin)]
         public async Task<ActionResult<ApiResponse>> CreateMenuItem([FromForm] MenuItemCreateDto menuItemCreateDto)
         {
             try
@@ -99,6 +101,7 @@ namespace RedMango_API.Controllers
         }
 
         [HttpPut("{id:int}", Name = "UpdateMenuItem")]
+        [Authorize(Roles = SD.Role_Admin)]
         public async Task<ActionResult<ApiResponse>> UpdateMenuItem(int id, [FromForm] MenuItemUpdateDto menuItemUpdateDto)
         {
             try
@@ -149,6 +152,7 @@ namespace RedMango_API.Controllers
         }
 
         [HttpDelete("{id:int}", Name = "DeleteMenuItem")]
+        [Authorize(Roles = SD.Role_Admin)]
         public async Task<ActionResult<ApiResponse>> DeleteMenuItem(int id)
         {
             try
